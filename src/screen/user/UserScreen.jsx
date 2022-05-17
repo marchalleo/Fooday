@@ -1,17 +1,20 @@
 import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, Pressable } from 'react-native';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { LoginContext } from '../context/context';
-import { UserContext } from '../context/context';
+import { LoginContext } from '../../context/context';
+import { UserContext } from '../../context/context';
 
-export function MapScreen({ navigation }) {
+export function UserScreen({ navigation }) {
 
   const {login, setLogin} = useContext(LoginContext);
   const {user, setUser} = useContext(UserContext);
 
   return (
     <View style={styles.container}>
-        <Text>Map</Text>
+        <Text>Home</Text>
+        <Text>{user?.id}</Text>
+        <Text>{user?.username}</Text>
+        <Text>{user?.email}</Text>
     </View>
   );
 }

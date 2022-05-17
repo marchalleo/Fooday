@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
-import { LoginContext } from '../context/context';
-import { UserContext } from '../context/context';
+import { LoginContext } from '../../context/context';
+import { UserContext } from '../../context/context';
 import axios from 'axios';
 
 export function ListScreen({ navigation }) {
