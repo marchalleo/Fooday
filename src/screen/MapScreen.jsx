@@ -4,17 +4,14 @@ import { useContext } from 'react';
 import { LoginContext } from '../context/context';
 import { UserContext } from '../context/context';
 
-export function HomeScreen({ navigation }) {
+export function MapScreen({ navigation }) {
 
   const {login, setLogin} = useContext(LoginContext);
   const {user, setUser} = useContext(UserContext);
 
   return (
     <View style={styles.container}>
-        <Text>Home</Text>
-        <Text>{user?.id}</Text>
-        <Text>{user?.username}</Text>
-        <Text>{user?.email}</Text>
+        <Text>Map</Text>
     </View>
   );
 }
