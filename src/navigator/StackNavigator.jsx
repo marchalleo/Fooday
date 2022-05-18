@@ -4,10 +4,13 @@ import { RegisterScreen } from '../screen/register/RegisterScreen'
 import { UserScreen } from '../screen/user/UserScreen'
 import { MapScreen } from '../screen/map/MapScreen'
 import { ListScreen } from '../screen/list/ListScreen'
+import { PlaceScreen } from '../screen/place/placeScreen'
+import { PlaceFormScreen } from '../screen/placeForm/placeForm'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LoginContext } from '../context/context';
 import { useContext } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,15 +20,25 @@ export function StackNavigator() {
 
     const Tab = createBottomTabNavigator();
 
+    const TabNav = () => {
+        return (
+            <Tab.Navigator initialRouteName="Map">
+                <Stack.Screen name="List" component={ListScreen} options={{headerShown: false}}/>
+                <Stack.Screen name="Map" component={MapScreen} options={{headerShown: false}}/>
+                <Stack.Screen name="User" component={UserScreen} options={{headerShown: false}}/>
+            </Tab.Navigator>
+        )
+    }
+
     return (
         <>
         {login ? (
             //si le login est true, alors on retourne les screen suivants
-            <Tab.Navigator initialRouteName="Map">
-                    <Stack.Screen name="List" component={ListScreen} options={{headerShown: false}}/>
-                    <Stack.Screen name="Map" component={MapScreen} options={{headerShown: false}}/>
-                    <Stack.Screen name="User" component={UserScreen} options={{headerShown: false}}/>
-            </Tab.Navigator>
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={TabNav} options={{headerShown: false}}/>
+                <Stack.Screen name="Place" component={PlaceScreen}/>
+                <Stack.Screen name="PlaceForm" component={PlaceFormScreen}/>
+            </Stack.Navigator>
             ) : (
             //sinon on retourne sur la page login
             <Stack.Navigator>

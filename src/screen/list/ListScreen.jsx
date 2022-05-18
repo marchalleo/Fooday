@@ -15,6 +15,14 @@ export function ListScreen({ navigation }) {
 
   const [places, setPlaces] = useState([]);
 
+  const placeDetail = () => {
+    navigation.navigate('Place');
+  }
+
+  const placeFormScreen = () => {
+    navigation.navigate('PlaceForm');
+  }
+
     useEffect(() => {
         axios.get('https://digitalcampus.nerdy-bear.com/api/places?populate=type', {
             headers: {
@@ -39,7 +47,7 @@ export function ListScreen({ navigation }) {
 
     const Item = ({ id, title, address, type }) => (
         <View>
-          <Pressable style={style.viewItem}>
+          <Pressable style={style.viewItem} onPress={() => placeDetail()}>
             <Text style={style.viewItemTitle}Title>{title}</Text>
             <View style={style.viewItemInfo}>
                 <Text style={style.viewItemType}>{ type }</Text>
@@ -59,7 +67,7 @@ export function ListScreen({ navigation }) {
     <View style={styles.container}>
         <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
             <FlatList style={style.flatList} data={places} renderItem={renderItem} showsVerticalScrollIndicator ={false} showsHorizontalScrollIndicator={false}/>
-            <Pressable style={style.addPlaces}>
+            <Pressable style={style.addPlaces} onPress={() => placeFormScreen()}>
               <View style={style.addPlacesIcon}></View>
               <View style={style.addPlacesIcon2}></View>
             </Pressable>
