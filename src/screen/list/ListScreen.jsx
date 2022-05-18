@@ -1,9 +1,12 @@
-import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { LoginContext } from '../../context/context';
 import { UserContext } from '../../context/context';
 import axios from 'axios';
+
+import { styles } from '../../style/global.style'
+import { style } from './List.style'
 
 export function ListScreen({ navigation }) {
 
@@ -34,26 +37,33 @@ export function ListScreen({ navigation }) {
         });
     }, []);
 
+    const Item = ({ id, title, address, type }) => (
+        <View>
+          <Pressable style={style.viewItem}>
+            <Text style={style.viewItemTitle}Title>{title}</Text>
+            <View style={style.viewItemInfo}>
+                <Text style={style.viewItemType}>{ type }</Text>
+                <Text style={style.viewItemText}>{ address }</Text>
+            </View>
+          </Pressable>
+        </View>
+      );
+      
+    const renderItem = ({ item }) => {
+        return (
+              <Item id={item.id} title={item.title} address={item.address} type={item.type}/>
+        );
+      }
+
   return (
     <View style={styles.container}>
-        {places.map((places) => (
-            <View key={places.id}>
-                <Text>{places.title}</Text>
-                <Text>{places.address}</Text>
-                <Text>{places.latitude}</Text>
-                <Text>{places.longitude}</Text>
-                <Text>{places.type}</Text>
-            </View>
-        ))}
+        <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+            <FlatList style={style.flatList} data={places} renderItem={renderItem} showsVerticalScrollIndicator ={false} showsHorizontalScrollIndicator={false}/>
+            <Pressable style={style.addPlaces}>
+              <View style={style.addPlacesIcon}></View>
+              <View style={style.addPlacesIcon2}></View>
+            </Pressable>
+        </SafeAreaView>
     </View>
   );
 }
-
-  const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'grey',
-      },
-  });

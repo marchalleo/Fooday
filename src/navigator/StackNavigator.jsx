@@ -30,7 +30,7 @@ export function StackNavigator() {
             //sinon on retourne sur la page login
             <Stack.Navigator>
                 <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
-                <Stack.Screen name="Register" component={RegisterScreen} options={{headerTransparent: true, headerTitle: '', headerBackTitleVisible: false}}/>
+                <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}}/>
             </Stack.Navigator>
         )}
         </>

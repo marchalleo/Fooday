@@ -5,6 +5,9 @@ import { LoginContext } from '../../context/context';
 import { UserContext } from '../../context/context';
 import axios from 'axios';
 
+import { styles } from '../../style/global.style'
+import { style } from './Register.style'
+
 export function RegisterScreen({ navigation }) {
 
   const {login, setLogin} = useContext(LoginContext);
@@ -41,64 +44,44 @@ export function RegisterScreen({ navigation }) {
   }
     return (
       <View style={styles.container}>
-      <View style={styles.viewRegister}>
-        <Text>Inscription</Text>
-        <TextInput 
-          style={styles.inputRegister}
-          placeholder="Identifiant"
-          placeholderTextColor="#000000"
-          value={identifiant}
-          onChangeText={setIdentifiant}
-          required
-        />
-        <TextInput 
-          style={styles.inputRegister}
-          placeholder="Email"
-          placeholderTextColor="#000000"
-          value={email}
-          onChangeText={setEmail}
-          required
-        />
-        <TextInput 
-          style={styles.inputRegister}
-          placeholder="Mot de passe"
-          placeholderTextColor="#000000"
-          value={password}
-          onChangeText={setPassword}
-          required
-          secureTextEntry={true}
-        />
-        <Pressable onPress={() => RegisterUser()}><Text>S'inscrire</Text></Pressable>
-        <Button
-          title="Se connecter"
-          onPress={() => navigation.navigate('Login')}
-        />
+        <View style={style.viewTitle}>
+          <Text style={style.viewTitleText}>Inscription</Text>
+        </View>
+        <View style={style.viewRegister}>
+          <TextInput 
+            style={style.viewRegisterInput}
+            placeholder="Identifiant"
+            placeholderTextColor="#FFFFFF"
+            value={identifiant}
+            onChangeText={setIdentifiant}
+            required
+          />
+          <TextInput 
+            style={style.viewRegisterInput}
+            placeholder="Email"
+            placeholderTextColor="#FFFFFF"
+            value={email}
+            onChangeText={setEmail}
+            required
+          />
+          <TextInput 
+            style={style.viewRegisterInput}
+            placeholder="Mot de passe"
+            placeholderTextColor="#FFFFFF"
+            value={password}
+            onChangeText={setPassword}
+            required
+            secureTextEntry={true}
+          />
+          <Pressable style={style.viewRegisterSubmit} onPress={() => RegisterUser()}>
+            <Text  style={style.viewRegisterSubmitText}>S'inscrire</Text>
+          </Pressable>
+        </View>
+
+        <View style={style.viewNoAccount}>
+          <Text style={style.viewNoAccountText}>Vous avez déja un compte ?</Text>
+          <Pressable onPress={() => navigation.navigate('Login')}><Text  style={style.viewNoAccountLink}>Connectez-vous</Text></Pressable>
+        </View>
       </View>
-    </View>
     );
   }
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'grey',
-    },
-    viewRegister: {
-      width: '80%',
-      height: '40%',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    inputRegister: {
-      width: '80%',
-      height: '15%',
-      textAlign: 'center',
-      backgroundColor: '#ffffff',
-      color: '#132851',
-      marginTop: 5,
-      marginBottom: 5,
-    },
-
-  });

@@ -4,6 +4,9 @@ import { useContext } from 'react';
 import { LoginContext } from '../../context/context';
 import { UserContext } from '../../context/context';
 
+import { styles } from '../../style/global.style'
+import { style } from './User.style'
+
 export function UserScreen({ navigation }) {
 
   const {login, setLogin} = useContext(LoginContext);
@@ -11,19 +14,9 @@ export function UserScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <Text>Home</Text>
-        <Text>{user?.id}</Text>
-        <Text>{user?.username}</Text>
-        <Text>{user?.email}</Text>
+        <Text style={style.viewUserText}>{user?.id}</Text>
+        <Text style={style.viewUserText}>{user?.username}</Text>
+        <Text style={style.viewUserText}>{user?.email}</Text>
     </View>
   );
 }
-
-  const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'grey',
-      },
-  });

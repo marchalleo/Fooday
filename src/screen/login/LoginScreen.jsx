@@ -5,6 +5,9 @@ import { LoginContext } from '../../context/context';
 import { UserContext } from '../../context/context';
 import axios from 'axios';
 
+import { styles } from '../../style/global.style'
+import { style } from './Login.style'
+
 export function LoginScreen({ navigation }) {
 
   const {login, setLogin} = useContext(LoginContext);
@@ -39,56 +42,37 @@ export function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.viewRegister}>
-        <Text>Connexion</Text>
+      <View style={style.viewTitle}>
+        <Text style={style.viewTitleText}>Connexion</Text>
+      </View>
+
+      <View style={style.viewLogin}>
         <TextInput 
-          style={styles.inputRegister}
+          style={style.viewLoginInput}
           placeholder="Identifiant"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#FFFFFF"
           value={identifiant}
           onChangeText={setIdentifiant}
           required
         />
         <TextInput 
-          style={styles.inputRegister}
+          style={style.viewLoginInput}
           placeholder="Mot de passe"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#FFFFFF"
           value={password}
           onChangeText={setPassword}
           required
           secureTextEntry={true}
         />
-        <Pressable onPress={() => LoginUser()}><Text>Se connecter</Text></Pressable>
-        <Button
-          title="S'inscrire"
-          onPress={() => navigation.navigate('Register')}
-        />
+        <Pressable style={style.viewLoginSubmit} onPress={() => LoginUser()}>
+          <Text style={style.viewLoginSubmitText}>Se connecter</Text>
+        </Pressable>
+      </View>
+
+      <View style={style.viewNoAccount}>
+        <Text style={style.viewNoAccountText}>Vous n'avez pas encore de compte ?</Text>
+        <Pressable onPress={() => navigation.navigate('Register')}><Text  style={style.viewNoAccountLink}>Inscrivez-vous</Text></Pressable>
       </View>
     </View>
   );
   }
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'grey',
-    },
-    viewRegister: {
-      width: '80%',
-      height: '40%',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    inputRegister: {
-      width: '80%',
-      height: '15%',
-      textAlign: 'center',
-      backgroundColor: '#ffffff',
-      color: '#132851',
-      marginTop: 5,
-      marginBottom: 5,
-    },
-
-  });
