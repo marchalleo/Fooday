@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, Pressable } from 'react-native';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { LoginContext } from '../../context/context';
-import { UserContext } from '../../context/context';
+import { LoginContext } from '../../../context/context';
+import { UserContext } from '../../../context/context';
 import axios from 'axios';
 
-import { styles } from '../../style/global.style'
+import { styles } from '../../../style/global.style'
 import { style } from './Register.style'
 
 export function RegisterScreen({ navigation }) {

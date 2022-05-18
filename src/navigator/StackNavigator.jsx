@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen } from '../screen/login/LoginScreen';
-import { RegisterScreen } from '../screen/register/RegisterScreen'
+import { LoginScreen } from '../screen/auth/login/LoginScreen';
+import { RegisterScreen } from '../screen/auth/register/RegisterScreen'
 import { UserScreen } from '../screen/user/UserScreen'
 import { MapScreen } from '../screen/map/MapScreen'
 import { ListScreen } from '../screen/list/ListScreen'
