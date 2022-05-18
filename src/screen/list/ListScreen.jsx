@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { LoginContext } from '../../context/context';
 import { UserContext } from '../../context/context';
+import { PlaceContext } from '../../context/context';
+import {useStore} from '../../store/places'
 import axios from 'axios';
 
 import { styles } from '../../style/global.style'
@@ -13,24 +15,26 @@ export function ListScreen({ navigation }) {
   const {login, setLogin} = useContext(LoginContext);
   const {user, setUser} = useContext(UserContext);
 
-  const [places, setPlaces] = useState([]);
+  const {places, setPlaces} = useStore();
 
-  const placeDetail = () => {
-    navigation.navigate('Place');
+
+  const placeDetail = (item) => {
+    navigation.navigate('Place', {item});
+    console.log(item);
   }
 
   const placeFormScreen = () => {
     navigation.navigate('PlaceForm');
   }
 
-    useEffect(() => {
+    useEffect(() => {      
         axios.get('https://digitalcampus.nerdy-bear.com/api/places?populate=type', {
             headers: {
             Authorization: 'Bearer ' + user.jwt
             }
         }).then((response) => {
             const {data} = response.data;
-            console.log(data);
+            // console.log(data);
             setPlaces(data.map((data) => {
                 return{
                 id: data.id,
@@ -45,13 +49,13 @@ export function ListScreen({ navigation }) {
         });
     }, []);
 
-    const Item = ({ id, title, address, type }) => (
+    const Item = (item) => (
         <View>
-          <Pressable style={style.viewItem} onPress={() => placeDetail()}>
-            <Text style={style.viewItemTitle}Title>{title}</Text>
+          <Pressable style={style.viewItem} onPress={() => placeDetail(item)}>
+            <Text style={style.viewItemTitle}Title>{ item.title }</Text>
             <View style={style.viewItemInfo}>
-                <Text style={style.viewItemType}>{ type }</Text>
-                <Text style={style.viewItemText}>{ address }</Text>
+                <Text style={style.viewItemType}>{ item.type }</Text>
+                <Text style={style.viewItemText}>{ item.address }</Text>
             </View>
           </Pressable>
         </View>
@@ -63,10 +67,11 @@ export function ListScreen({ navigation }) {
         );
       }
 
+
   return (
     <View style={styles.container}>
         <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-            <FlatList style={style.flatList} data={places} renderItem={renderItem} showsVerticalScrollIndicator ={false} showsHorizontalScrollIndicator={false}/>
+            <FlatList style={style.flatList} data={places} renderItem={renderItem} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} keyExtractor={(item) => item.id}/>
             <Pressable style={style.addPlaces} onPress={() => placeFormScreen()}>
               <View style={style.addPlacesIcon}></View>
               <View style={style.addPlacesIcon2}></View>
