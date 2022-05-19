@@ -63,7 +63,7 @@ export function ListScreen({ navigation }) {
       
     const renderItem = ({ item }) => {
         return (
-              <Item id={item.id} title={item.title} address={item.address} type={item.type}/>
+              <Item id={item.id} title={item.title} address={item.address} type={item.type} latitude={item.latitude} longitude={item.longitude}/>
         );
       }
 

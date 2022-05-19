@@ -36,13 +36,16 @@ export function PlaceFormScreen({ navigation }) {
       }
     })
     .then(function (response) {
-      console.log(response.data);
-      setPlaces([...places, {
-        title: title,
-        address: address,
-        latitude: latitude,
-        longitude: longitude,
-      }]);
+      const data = response.data.data
+      const newPlace = {
+        id: data.id,
+        title: data.attributes.title,
+        address: data.attributes.address,
+        latitude: data.attributes.latitude,
+        longitude: data.attributes.longitude,
+      }
+      setPlaces([...places, newPlace]);
+      navigation.replace('Place', {item: newPlace})
     })
     .catch(function (error) {
       console.log(error);

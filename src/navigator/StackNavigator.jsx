@@ -36,7 +36,7 @@ export function StackNavigator() {
             //si le login est true, alors on retourne les screen suivants
             <Stack.Navigator>
                 <Stack.Screen name="Home" component={TabNav} options={{headerShown: false}}/>
-                <Stack.Screen name="Place" component={PlaceScreen} options={{headerTransparent: true, headerTitle: '', headerBackTitleVisible: false}}/>
+                <Stack.Screen name="Place" component={PlaceScreen} options={{headerTransparent: true, headerTintColor: "#132851", headerTitle: '', headerBackTitleVisible: false}}/>
                 <Stack.Screen name="PlaceForm" component={PlaceFormScreen} options={{headerTransparent: true, headerTitle: '', headerBackTitleVisible: false}}/>
             </Stack.Navigator>
             ) : (
