@@ -27,6 +27,27 @@ export function PlaceScreen({ navigation, route }) {
   setPlaces(place);
   navigation.navigate('List');
 };
+  const VisitedPlace = (item) => {
+    axios.put('https://digitalcampus.nerdy-bear.com/api/places/' + item.id, {data : {
+      title: item.title,
+      comment: item.comment,
+      address: item.address,
+      latitude: item.latitude,
+      longitude: item.longitude,  
+      gone: !item.gone,
+    }}, {
+      headers: {
+        Authorization: 'Bearer ' + user.jwt
+      },
+  }).then(response => {
+    setPlaces(places.map((place) => {
+      if(place.id == item.id) {
+        place.gone = response.data.data.attributes.gone
+      }
+      return place
+    }));
+  })
+  };
 
   const AlertDelete = (id) => {  
     Alert.alert(  
@@ -64,7 +85,21 @@ export function PlaceScreen({ navigation, route }) {
         <View style={style.viewPlaceInfoContent}>
           <Text style={style.viewPlaceText}>{item.title}</Text>
           <Text style={style.viewPlaceAdress}>{item.address}</Text>
+          <Text style={style.viewPlaceAdress}>{item.gone}</Text>
           <Pressable style={style.viewPlaceDelete} onPress={() => AlertDelete(item.id)}><Text style={style.viewPlaceDeleteText}>supprimer</Text></Pressable>
+          {/* <Pressable style={style.viewPlaceDelete} onPress={() => VisitedPlace(item)}>
+            <Text style={style.viewPlaceDeleteText}>
+              <>
+                {
+                  item.gone ? (
+                    <Text>Visité </Text>
+                  ) : (
+                <Text> Non visité</Text>
+                  )
+                }
+              </>
+            </Text>
+          </Pressable> */}
         </View>
       </View>
     </View>

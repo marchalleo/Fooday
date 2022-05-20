@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, FlatList } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, FlatList, TextInput } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { LoginContext } from '../../context/context';
@@ -16,7 +16,23 @@ export function ListScreen({ navigation }) {
   const {user, setUser} = useContext(UserContext);
 
   const {places, setPlaces} = useStore();
+  
+  const [search, setSearch] = useState('');
 
+  const [defaultPlace, setDefaultPlace] = useState(places);
+  
+  const searchPlaces = places
+  .filter(place => place.title.includes(search));
+
+  const filteredPlace = () => {
+    const noGone = defaultPlace.filter(place => !place.gone).filter(place => place.title.includes(search));
+    setPlaces(noGone);
+  }
+
+  const filteredPlaceGone = () => {
+    const gone = defaultPlace.filter(place => place.gone).filter(place => place.title.includes(search));
+    setPlaces(gone);
+  }
 
   const placeDetail = (item) => {
     navigation.navigate('Place', {item});
@@ -35,17 +51,19 @@ export function ListScreen({ navigation }) {
         }).then((response) => {
             const {data} = response.data;
             // console.log(data);
-            setPlaces(data.map((data) => {
+            setDefaultPlace(data.map((data) => {
                 return{
                 id: data.id,
                 title: data.attributes.title,
                 comment: data.attributes.comment,
                 address: data.attributes.address,
                 latitude: data.attributes.latitude,
-                longitude: data.attributes.longitude,   
+                longitude: data.attributes.longitude,  
+                gone: data.attributes.gone,
                 type: data.attributes.type.data?.attributes?.name,
                 }
             }))
+            setPlaces(defaultPlace);
         });
     }, []);
 
@@ -71,7 +89,27 @@ export function ListScreen({ navigation }) {
   return (
     <View style={styles.container}>
         <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-            <FlatList style={style.flatList} data={places} renderItem={renderItem} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} keyExtractor={(item) => item.id}/>
+          <View style={style.viewListHeader}>
+            <View style={style.viewListHeaderBloc}>
+              <Pressable style={style.viewListHeaderGone} onPress={() => filteredPlaceGone()}>
+                <Text style={style.viewListHeaderGoneText}>VISITÉ</Text>
+              </Pressable>
+              <Pressable style={style.viewListHeaderGone} onPress={() => filteredPlace()}>
+                <Text style={style.viewListHeaderGoneText}>NON VISITÉ</Text>
+              </Pressable>
+            </View>
+            <View style={style.viewListHeaderBlocSearch}>
+              <TextInput 
+              style={style.viewListSearch}
+              placeholder="Rechercher"
+              placeholderTextColor="#132851"
+              value={search}
+              onChangeText={setSearch}
+              required
+              />
+            </View>
+          </View>
+            <FlatList style={style.flatList} data={searchPlaces} renderItem={renderItem} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} keyExtractor={(item) => item.id}/>
             <Pressable style={style.addPlaces} onPress={() => placeFormScreen()}>
               <View style={style.addPlacesIcon}></View>
               <View style={style.addPlacesIcon2}></View>

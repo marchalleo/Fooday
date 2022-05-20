@@ -2,6 +2,42 @@ import { StyleSheet } from 'react-native';
 import { variable } from '../../style/variable.style'
 
 export const style = StyleSheet.create({
+    viewListHeader: {
+        width: '100%',
+        height: '15%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingBottom: 5,
+    },
+    viewListHeaderBloc: {
+        width: '100%',
+        height: '65%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    viewListHeaderGone: {
+        width: '50%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }, 
+    viewListHeaderGoneText: {
+        // fontSize: 18,
+        color: variable.white,
+    },
+    viewListHeaderBlocSearch: {
+        width: '100%',
+        height: '35%',
+    },
+    viewListSearch: {
+        backgroundColor: "#FFFFFF",
+        width: "80%",
+        height: '100%',
+        borderTopEndRadius: 20,
+        borderBottomEndRadius: 20,
+        paddingLeft: 30,
+    },
     flatList: {
         width: '85%',
     },
